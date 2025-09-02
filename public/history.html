@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<title>Arabbet — السجل</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css"/></head><body><div class="app">
+    <header class="header">
+      <div class="left"><img src="assets/logo.svg" alt="logo" class="logo"/></div>
+      <div class="right">
+        <a href="deposit.html" class="wallet-badge" title="الرصيد"><img src="assets/dollar.svg" alt="$" /><span>0.00 $</span></a>
+        <button class="icon-btn" aria-label="profile" title="الملف">👤</button>
+        <button class="icon-btn" aria-label="more" title="قائمة">⋯</button>
+        <div class="header-controls">
+          <select id="currencySelect" class="currency"><option value="USD" selected>USD</option><option value="QAR">QAR</option><option value="EUR">EUR</option><option value="SAR">SAR</option></select>
+          <button id="themeToggle" class="theme-toggle" title="Theme">☾</button>
+          <button id="langToggle" class="theme-toggle" title="AR/EN">AR</button>
+        </div>
+      </div>
+    </header>
+<section class="history"><h2>سجل العمليات</h2><table class="table" id="histTable"><thead><tr><th>الطلب</th><th>المبلغ</th><th>العملة</th><th>الحالة</th><th>الزمن</th></tr></thead><tbody><tr><td colspan="5">يتم التحميل...</td></tr></tbody></table></section>
+    <footer class="bottom-nav">
+      <a class="nav-item" href="index.html"><span>مباشر</span></a><a class="nav-item" href="sports.html"><span>رياضة</span></a><a class="nav-item" href="betslip.html"><span>قسيمة</span></a><a class="nav-item" href="casino.html"><span>كازينو</span></a><a class="nav-item" href="history.html"><span>السجل</span></a>
+    </footer>
+</div><script src="app.js"></script><script>(async function(){try{const res=await fetch('/api/history?cid=user_demo');const data=await res.json();const tbody=document.querySelector('#histTable tbody');tbody.innerHTML='';if(!data?.orders?.length){tbody.innerHTML='<tr><td colspan="5">لا يوجد عمليات</td></tr>';return;}for(const o of data.orders){const tr=document.createElement('tr');const st=o.status==='approved'?'<span class="badge-ok">ناجحة</span>':o.status==='declined'?'<span class="badge-fail">مرفوضة</span>':o.status;tr.innerHTML='<td>'+o.order_id+'</td><td>'+(o.amount/100).toFixed(2)+'</td><td>'+o.currency+'</td><td>'+st+'</td><td>'+new Date(o.timestamp*1000).toLocaleString()+'</td>';tbody.appendChild(tr);}}catch(e){console.error(e);}})();</script></body></html>

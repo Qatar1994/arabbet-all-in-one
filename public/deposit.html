@@ -1,0 +1,11 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<title>Arabbet — إيداع</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css"/></head><body><div class="app">
+<header class="header"><a href="index.html" class="back" aria-label="back">←</a><h1 class="title">إيداع</h1><div class="right"><div class="header-controls"><select id="currencySelect" class="currency"><option value="USD" selected>USD</option><option value="QAR">QAR</option><option value="EUR">EUR</option><option value="SAR">SAR</option></select><button id="themeToggle" class="theme-toggle">☾</button><button id="langToggle" class="theme-toggle">AR</button></div></div></header>
+<section class="deposit-page"><div class="balance"><span>الرصيد: 0.00 $</span></div><label class="field"><span>المبلغ</span><input id="amount" type="number" placeholder="أدخل المبلغ"/></label><div class="quick-amounts"><button data-amt="25">25</button><button data-amt="50">50</button><button data-amt="100">100</button><button data-amt="250">250</button></div><div class="methods"><h3>طرق الدفع</h3><button class="method active"><span>PraxisV3</span></button><button class="method"><span>بطاقات</span></button><button class="method"><span>بنك</span></button><button class="method"><span>محافظ</span></button></div><button id="proceed" class="btn btn-deposit w-full" style="margin-top:12px;">متابعة</button><div id="cashierWrap" class="cashier hidden"><div class="cashier-head"><strong>الكاشير</strong><button id="closeCashier" class="icon-btn small">✕</button></div><iframe id="cashierFrame" title="Cashier" allow="payment *"></iframe></div><a href="history.html" style="display:block;margin:12px 0;color:var(--text);text-decoration:underline">عرض سجل العمليات</a></section>
+    <footer class="bottom-nav">
+      <a class="nav-item" href="index.html"><span>مباشر</span></a><a class="nav-item" href="sports.html"><span>رياضة</span></a><a class="nav-item" href="betslip.html"><span>قسيمة</span></a><a class="nav-item" href="casino.html"><span>كازينو</span></a><a class="nav-item" href="history.html"><span>السجل</span></a>
+    </footer>
+</div><script src="app.js"></script></body></html>
