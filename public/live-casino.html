@@ -1,17 +1,173 @@
-<!DOCTYPE html><html lang='ar' dir='rtl'><head><meta charset='UTF-8'/><meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'/><title>Arabbet</title><link href='https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap' rel='stylesheet'><link rel='stylesheet' href='styles.css'/></head><body><div class='app'>    <header class="header">
-      <div class="left"><img src="assets/logo.svg" alt="logo" class="logo"/></div>
-      <div class="right">
-        <a href="deposit.html" class="wallet-badge" title="الرصيد"><img src="assets/dollar.svg" alt="$" /><span>0.00 $</span></a>
-        <button class="icon-btn" aria-label="profile" title="الملف">👤</button>
-        <button class="icon-btn" aria-label="more" title="قائمة">⋯</button>
-        <div class="header-controls">
-          <select id="currencySelect" class="currency"><option value="USD" selected>USD</option><option value="QAR">QAR</option><option value="EUR">EUR</option><option value="SAR">SAR</option></select>
-          <button id="themeToggle" class="theme-toggle" title="Theme">☾</button>
-          <button id="langToggle" class="theme-toggle" title="AR/EN">AR</button>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Arabbet — لايف كازينو</title>
+  <style>
+    :root { --bg:#111; --panel:#1c1c1c; --muted:#aaa; --txt:#fff; --accent:#fff; }
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Arial}
+    header{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #222;background:#0e0e0e;position:sticky;top:0;z-index:5}
+    .logo{font-weight:800;letter-spacing:.5px}
+    .right{display:flex;gap:8px;align-items:center}
+    .btn, .chip{cursor:pointer;border:1px solid #333;background:var(--panel);color:var(--txt);border-radius:8px;padding:10px 14px}
+    .btn:hover, .chip:hover{border-color:#555}
+    main{max-width:1100px;margin:18px auto;padding:0 16px}
+    .hero{background:linear-gradient(180deg,#141414,#0f0f0f);border:1px solid #222;border-radius:14px;padding:18px 16px;margin-bottom:16px}
+    .muted{color:var(--muted);font-size:.95rem}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+    .card{background:var(--panel);border:1px solid #222;border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+    .thumb{aspect-ratio:16/9;background:#0b0b0b url('assets/dummy-thumb.svg') center/cover no-repeat}
+    .card h3{margin:10px 12px 4px;font-size:1.05rem}
+    .card p{margin:0 12px 10px;color:var(--muted);font-size:.9rem}
+    .card .actions{margin:0 12px 14px}
+    .pill{font-size:.8rem;border-radius:99px;padding:6px 10px;color:#000;background:#fff;display:inline-block;margin-inline:12px;margin-top:8px}
+    /* Modal */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:16px}
+    .hidden{display:none}
+    .sheet{width:min(980px,100%);background:#0f0f0f;border:1px solid #222;border-radius:14px;overflow:hidden}
+    .sheet header{position:unset;border-bottom:1px solid #222}
+    .sheet .body{display:grid;grid-template-columns:1.2fr .8fr}
+    video{width:100%;background:#000;height:100%}
+    .panel{padding:14px;border-left:1px solid #222}
+    .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+    .chip{padding:8px 12px;border-radius:999px}
+    .log{background:#0a0a0a;border:1px solid #1f1f1f;border-radius:10px;padding:10px;height:130px;overflow:auto;font-size:.9rem;color:var(--muted)}
+    .close{background:transparent;border:1px solid #333}
+    @media (max-width:860px){ .sheet .body{grid-template-columns:1fr} .panel{border-left:none;border-top:1px solid #222} }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">ARABBET • Live</div>
+    <div class="right">
+      <div id="balanceView" class="pill">الرصيد: <span id="bal">0.00</span> $</div>
+      <a class="btn" href="deposit.html">إيداع</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>🎥 لايف كازينو (تجريبي)</h2>
+      <p class="muted">واجهة تجريبية لطاولات الروليت والبلاك جاك والبaccarat. هذا ديمو فقط — للربط الحقيقي تحتاج تراخيص ومزوّدي بث.</p>
+    </section>
+
+    <section class="grid">
+      <!-- Roulette -->
+      <article class="card">
+        <div class="thumb" style="background-image:url('assets/live/roulette.jpg'), linear-gradient(#0b0b0b,#090909)"></div>
+        <h3>Roulette Live</h3>
+        <p>طاولة روليت مباشرة.</p>
+        <div class="actions">
+          <button class="btn" onclick="openTable('Roulette','assets/live/roulette.mp4')">ادخل الطاولة</button>
+        </div>
+      </article>
+
+      <!-- Blackjack -->
+      <article class="card">
+        <div class="thumb" style="background-image:url('assets/live/blackjack.jpg'), linear-gradient(#0b0b0b,#090909)"></div>
+        <h3>Blackjack Live</h3>
+        <p>بلاك جاك لايف — ديمو.</p>
+        <div class="actions">
+          <button class="btn" onclick="openTable('Blackjack','assets/live/blackjack.mp4')">ادخل الطاولة</button>
+        </div>
+      </article>
+
+      <!-- Baccarat -->
+      <article class="card">
+        <div class="thumb" style="background-image:url('assets/live/baccarat.jpg'), linear-gradient(#0b0b0b,#090909)"></div>
+        <h3>Baccarat Live</h3>
+        <p>باكارات لايف — ديمو.</p>
+        <div class="actions">
+          <button class="btn" onclick="openTable('Baccarat','assets/live/baccarat.mp4')">ادخل الطاولة</button>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="sheet">
+      <header>
+        <div class="logo" id="tableName">الطاولة</div>
+        <div class="right">
+          <button class="btn close" onclick="closeTable()">إغلاق</button>
+        </div>
+      </header>
+      <div class="body">
+        <div class="video">
+          <!-- ضع ملفات mp4 داخل assets/live أو غيّر المسار -->
+          <video id="liveVideo" controls playsinline></video>
+        </div>
+        <div class="panel">
+          <div class="muted" style="margin-bottom:8px">الشرائح</div>
+          <div class="row">
+            <button class="chip" onclick="setStake(5)">5$</button>
+            <button class="chip" onclick="setStake(25)">25$</button>
+            <button class="chip" onclick="setStake(50)">50$</button>
+            <button class="chip" onclick="setStake(100)">100$</button>
+          </div>
+
+          <div class="muted" style="margin:10px 0 6px">الرهان الحالي: <b id="stakeView">0</b> $</div>
+          <div class="row">
+            <button class="btn" onclick="placeBet()">تثبيت الرهان</button>
+            <button class="btn" onclick="fakeResult()">نتيجة عشوائية (ديمو)</button>
+          </div>
+
+          <div class="muted" style="margin:10px 0 6px">الأحداث</div>
+          <div class="log" id="log"></div>
         </div>
       </div>
-    </header>    <nav class="tabs">
-      <a class="tab active" href="index.html">الرياضة</a><a class="tab" href="live.html">مباشر</a><a class="tab" href="tvbet.html">رهان TV</a><a class="tab" href="casino.html">كازينو</a><a class="tab" href="live-casino.html">كازينو مباشر</a><a class="tab" href="reviews.html">المراجعات</a><a class="tab" href="promo.html">العروض</a>
-    </nav><section class='history'><h2>صفحة مؤقتة</h2></section>    <footer class="bottom-nav">
-      <a class="nav-item" href="index.html"><span>مباشر</span></a><a class="nav-item" href="sports.html"><span>رياضة</span></a><a class="nav-item" href="betslip.html"><span>قسيمة</span></a><a class="nav-item" href="casino.html"><span>كازينو</span></a><a class="nav-item" href="history.html"><span>السجل</span></a>
-    </footer></div><script src='app.js'></script></body></html>
+    </div>
+  </div>
+
+  <script>
+    // رصيد محلي (ديمو) عبر localStorage — بدلّه لاحقاً بنظام عضوياتك
+    function getBal(){ return Number(localStorage.getItem('balance')||'0'); }
+    function setBal(v){ localStorage.setItem('balance', String(v)); document.getElementById('bal').textContent = v.toFixed(2); }
+    setBal(getBal()); // تحديث العرض عند الدخول
+
+    const modal = document.getElementById('modal');
+    const videoEl = document.getElementById('liveVideo');
+    const tableNameEl = document.getElementById('tableName');
+    const logEl = document.getElementById('log');
+    const stakeView = document.getElementById('stakeView');
+    let stake = 0;
+
+    function openTable(name, src){
+      // تحقق من وجود مستخدم/رصيد
+      if(isNaN(getBal())){ alert('User not found: تعذّر فتح الكاشير.'); return; }
+      tableNameEl.textContent = `طاولة ${name}`;
+      logEl.textContent = '';
+      stake = 0; stakeView.textContent = '0';
+      videoEl.src = src || ''; // إن لم تضع فيديو، سيظهر مشغّل فارغ
+      modal.classList.remove('hidden');
+      videoEl.play().catch(()=>{ /* تجاهل خطأ التشغيل التلقائي */ });
+    }
+    function closeTable(){ modal.classList.add('hidden'); videoEl.pause(); }
+
+    function setStake(v){ stake = v; stakeView.textContent = v; }
+    function placeBet(){
+      if(stake<=0){ appendLog('اختر شريحة أولاً.'); return; }
+      const bal = getBal();
+      if(bal < stake){ appendLog('الرصيد غير كافٍ.'); return; }
+      setBal(bal - stake);
+      appendLog(`تم تثبيت رهان بقيمة ${stake}$`);
+    }
+    function fakeResult(){
+      // نتيجة عشوائية (50/50) — لأغراض العرض فقط
+      if(stake<=0){ appendLog('لا يوجد رهان نشط.'); return; }
+      const win = Math.random() < 0.5;
+      if(win){
+        const prize = stake*2;
+        setBal(getBal()+prize);
+        appendLog(`🎉 ربحت ${prize}$`);
+      }else{
+        appendLog('❌ خسرت الجولة');
+      }
+      stake = 0; stakeView.textContent = '0';
+    }
+    function appendLog(t){ logEl.textContent += (t + "\n"); logEl.scrollTop = logEl.scrollHeight; }
+  </script>
+</body>
+</html>
